@@ -259,14 +259,14 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
     { id: 'phantom', name: 'まぼろしパグ', fur: 'ghost', acc: 'halo', price: -1, how: '隠しイベントを見つけるともらえる', anim: 'float', say: '見つけてくれてありがとう。' }
   ];
   PP.BALLS = [
-    { id: 'normal', name: 'ふつうのパグ顔', fur: 'fawn', base: 'normal', price: 0 },
-    { id: 'smile', name: '笑顔のパグ', fur: 'fawn', base: 'happy', price: 200 },
-    { id: 'sleepy', name: '眠そうなパグ', fur: 'fawn', base: 'sleepy', price: 200 },
-    { id: 'surprised', name: '驚いたパグ', fur: 'fawn', base: 'surprised', price: 300 },
-    { id: 'black', name: '黒パグ', fur: 'black', base: 'normal', price: 400 },
-    { id: 'white', name: '白パグ', fur: 'white', base: 'normal', price: 400 },
-    { id: 'gold', name: '金色パグ', fur: 'gold', base: 'normal', price: 1500 },
-    { id: 'rainbow', name: '虹色パグ', fur: 'rainbow', base: 'happy', price: 3000 }
+    { id: 'normal', name: 'シルバー', c: ['#ffffff', '#c9ced6', '#7b828e'], price: 0 },
+    { id: 'smile', name: 'ピンク', c: ['#fff0f6', '#ff9ec4', '#d6447f'], price: 200 },
+    { id: 'sleepy', name: 'ブルー', c: ['#eef7ff', '#7fc4ff', '#2f7fc1'], price: 200 },
+    { id: 'surprised', name: 'グリーン', c: ['#f0fff4', '#8fe3a0', '#2f9e5b'], price: 300 },
+    { id: 'black', name: 'ブラック', c: ['#9a9aa6', '#44444c', '#17171a'], price: 400 },
+    { id: 'white', name: 'パール', c: ['#ffffff', '#fbf4e6', '#d9cbb0'], price: 400 },
+    { id: 'gold', name: 'ゴールド', c: ['#fffbe0', '#ffd84a', '#c58a00'], price: 1500 },
+    { id: 'rainbow', name: 'レインボー', c: null, price: 3000 }
   ];
   PP.CUSTOM = {
     flipper: { name: 'しっぽの色', items: [{ id: 'fawn', name: 'フォーン', price: 0, c: '#e9c592', d: '#c99a5e' }, { id: 'black', name: 'ブラック', price: 300, c: '#3a3a42', d: '#1e1e24' }, { id: 'pink', name: 'ピンク', price: 300, c: '#ff9ec4', d: '#e06a9c' }, { id: 'gold', name: 'ゴールド', price: 800, c: '#ffd84a', d: '#d79a00' }] },
@@ -314,13 +314,13 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
   };
   PP.EVENT_HELP = [
     ['コンボ', '1.3秒以内に続けて当てると発生。2コンボ×1.5、3コンボ×2、5コンボ×3'],
-    ['パグフィーバー', '10コンボで発動。12秒間 得点2倍＋パグボールが2個増える'],
+    ['パグフィーバー', '10コンボで発動。12秒間 得点2倍＋ボールが2個増える'],
     ['マルチボール', 'ターゲットの列を3回そろえるごとにボールが2個増える'],
     ['ジャックポット', 'ターゲットを1列そろえると点灯。穴に入れると5,000点'],
     ['スーパージャックポット', 'ボールが2個以上ある時にジャックポットを取ると15,000点'],
     ['パグ大集合', '上の P・U・G レーンを全部光らせる。3,000点＋12秒間 得点2倍。2回目でエクストラボール'],
     ['肉球ラッシュ', 'バンパーに25回当てるごとに発動。12秒間バンパー得点3倍'],
-    ['巨大パグボール', '穴のルーレットで当たり。15秒間ボールが大きくなり得点2倍'],
+    ['巨大ボール', '穴のルーレットで当たり。15秒間ボールが大きくなり得点2倍'],
     ['ドッグフードボーナス', '穴のルーレットで当たり。フードが出現、1個300点＋1バウ'],
     ['隠しイベント', 'キラキラ光るバンパーだけに3回連続で当てる。場所はステージごとに違う'],
     ['ボーナスタイム', 'ステージクリアで20秒間、ボールが落ちても戻ってくる'],
@@ -447,7 +447,7 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
     ev(id, title, desc) { this.emit('event', { id, title, desc }); }
     giveExtra() { if (this.extra >= 2) return; this.extra++; this.ballsLeft++; this.ev('extra', 'エクストラボール！', '残りボール +1'); }
     startFever() { this.fever = TUNE.feverTime; this.inc('fever'); this.addBalls(2); this.ev('fever', 'パグフィーバー！！', '12秒間 得点2倍＋ボール増殖'); }
-    multiball() { this.addBalls(2); this.inc('multiball'); this.ev('multiball', 'マルチボール！', 'パグボールが増えた'); }
+    multiball() { this.addBalls(2); this.inc('multiball'); this.ev('multiball', 'マルチボール！', 'ボールが増えた'); }
     spawnFoods(n) {
       for (let i = 0; i < n; i++) for (let k = 0; k < 20; k++) {
         const x = 45 + this.rng() * 280, y = 150 + this.rng() * 320;
@@ -502,7 +502,7 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
       if (this.jackpotLit) this.jackpot(h.x, h.y);
       else if (h.to == null) {
         const r = this.rng();
-        if (r < 0.3 && this.giant <= 0) { this.giant = 15; this.ev('giant', '巨大パグボール！', '15秒間 大きくなって得点2倍'); }
+        if (r < 0.3 && this.giant <= 0) { this.giant = 15; this.ev('giant', '巨大ボール！', '15秒間 大きくなって得点2倍'); }
         else if (r < 0.62) { this.spawnFoods(10); this.ev('food', 'ドッグフードボーナス！', 'フードを拾って得点とバウ'); }
         else if (r < 0.85) { this.addScore(1000, h.x, h.y - 20, true); this.ev('r1000', 'ルーレット +1,000点', ''); }
         else { this.bow += 5; this.ev('rbow', 'ルーレット +5バウ', ''); }
@@ -766,6 +766,17 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
   };
   PP.pugSprite = function (fur, expr, accn, px) { px = px || 96; return PP.sprite('pug|' + fur + '|' + expr + '|' + (accn || '') + '|' + px, px, c => pugFace(c, px * (accn ? 0.3 : 0.4), { fur, expr, acc: accn })); };
 
+  // ===== ノーマルのボール（金属球） =====
+  PP.drawBall = function (c, r, skin) {
+    let g;
+    if (!skin.c) { g = c.createLinearGradient(-r, -r, r, r);['#ff7b7b', '#ffd95a', '#7be08a', '#62a8ff', '#c98bff'].forEach((k, i) => g.addColorStop(i / 4, k)); }
+    else { g = c.createRadialGradient(-r * 0.35, -r * 0.4, r * 0.05, 0, 0, r * 1.05); g.addColorStop(0, skin.c[0]); g.addColorStop(0.45, skin.c[1]); g.addColorStop(1, skin.c[2]); }
+    c.fillStyle = g; ci(c, 0, 0, r); c.fill(); c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = Math.max(0.8, r * 0.07); c.stroke();
+    c.fillStyle = 'rgba(255,255,255,.85)'; el(c, -r * 0.36, -r * 0.42, r * 0.26, r * 0.17); c.fill();
+    c.fillStyle = 'rgba(255,255,255,.25)'; c.beginPath(); c.arc(0, 0, r * 0.78, 0.5, 1.6); c.arc(0, 0, r * 0.62, 1.6, 0.5, true); c.fill();
+  };
+  PP.ballSprite = function (skin, px) { px = px || 96; return PP.sprite('ball|' + skin.id + '|' + px, px, c => PP.drawBall(c, px * 0.4, skin)); };
+
   // ===== バンパー =====
   const PLANET = [['#ff9f6b', '#c8553d'], ['#7fd1ff', '#2f7fc1'], ['#ffd86b', '#d98a1e'], ['#c9a2ff', '#7b4fd0'], ['#8fe3a0', '#2f9e5b']];
   function bumper(c, m, t, style) {
@@ -958,8 +969,8 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
         if (b.held && b.held.hole) continue;
         const vr = b.r > 12 ? b.r * 1.3 : b.r;
         if (this.quality !== 'low' && b.trail && !b.inShooter) { for (let i = 0; i < b.trail.length; i += 2) { c.globalAlpha = 0.05 + i / b.trail.length * 0.18; c.fillStyle = g.fever > 0 ? `hsl(${(t * 300 + i * 20) % 360},90%,70%)` : '#fff'; S.ci(c, b.trail[i], b.trail[i + 1], vr * (0.4 + i / b.trail.length * 0.5)); c.fill(); } c.globalAlpha = 1; }
-        const ex = b.ex || (g.fever > 0 ? 'star' : skin.base);
-        c.save(); c.translate(b.x, b.y); c.fillStyle = 'rgba(0,0,0,.2)'; S.el(c, 2, 3, vr, vr); c.fill(); c.rotate(b.ang); const sp = PP.pugSprite(skin.fur, ex), d = vr * 2.5; c.drawImage(sp, -d / 2, -d / 2, d, d); c.restore();
+        
+        c.save(); c.translate(b.x, b.y); c.fillStyle = 'rgba(0,0,0,.2)'; S.el(c, 2, 3, vr, vr); c.fill(); const sp = PP.ballSprite(skin), d = vr * 2.5; c.drawImage(sp, -d / 2, -d / 2, d, d); c.restore();
       }
       // パーティクル
       const ef = lk.effect;
@@ -1008,7 +1019,7 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
       c.font = '9.5px ' + FONT; const m = g.missions.find(x => !x.done); c.fillStyle = g.cleared ? '#7CFC9A' : '#ffd9ec';
       c.fillText(g.cleared ? '★ クリア済み！スコアをのばそう' : m ? `目標 ${g.missions.filter(x => x.done).length + 1}/${g.missions.length}：${m.t}（${m.k === 'score' ? Math.floor(m.p / m.n * 100) + '%' : m.p + '/' + m.n}）` : '', 52, 37);
       c.textAlign = 'center'; c.textBaseline = 'middle';
-      const n = Math.max(0, g.ballsLeft - (g.over ? 0 : 1)); for (let i = 0; i < Math.min(n, 5); i++) c.drawImage(PP.pugSprite(lk.ball.fur, lk.ball.base), 330 - i * 17, 6, 20, 20);
+      const n = Math.max(0, g.ballsLeft - (g.over ? 0 : 1)); for (let i = 0; i < Math.min(n, 5); i++) c.drawImage(PP.ballSprite(lk.ball), 330 - i * 17, 6, 20, 20);
       c.fillStyle = '#bcaedc'; c.font = '8px ' + FONT; c.fillText('のこり', 305 - Math.min(n, 5) * 8, 33);
       c.fillStyle = 'rgba(255,255,255,.16)'; c.beginPath(); c.roundRect(358, 8, 32, 30, 9); c.fill(); c.fillStyle = '#fff'; c.fillRect(368, 15, 4, 16); c.fillRect(376, 15, 4, 16);
     }
@@ -1211,6 +1222,7 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
     const cv = document.createElement('canvas'), d = Math.min(2, window.devicePixelRatio || 1); cv.width = cv.height = size * d; cv.style.width = cv.style.height = size + 'px';
     const c = cv.getContext('2d'); c.translate(size * d / 2, size * d * (acc ? 0.58 : 0.5)); PP.pugFace(c, size * d * (acc ? 0.3 : 0.38), { fur, expr, acc }); return cv;
   }
+  function ballCv(skin, size) { const cv = document.createElement('canvas'), d = Math.min(2, window.devicePixelRatio || 1); cv.width = cv.height = size * d; cv.style.width = cv.style.height = size + 'px'; const c = cv.getContext('2d'); c.translate(size * d / 2, size * d / 2); PP.drawBall(c, size * d * 0.4, skin); return cv; }
   function stagePreview(st, w, hh) {
     const cv = document.createElement('canvas'), d = Math.min(2, window.devicePixelRatio || 1); cv.width = w * d; cv.height = hh * d; cv.style.width = w + 'px'; cv.style.height = hh + 'px';
     const c = cv.getContext('2d'), k = w * d / 372; c.scale(k, k); c.translate(-14, -10);
@@ -1275,7 +1287,7 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
         if (this.cur !== 'title' || !document.body.contains(cv)) return; this.mascotRaf = requestAnimationFrame(loop); if (ts - last < 33) return; last = ts; const t = ts / 1000;
         c.setTransform(2, 0, 0, 2, 0, 0); c.clearRect(0, 0, 260, 170);
         const wag = Math.sin(t * 7) * 0.5; for (const sd of [0, 1]) { const f = { px: sd ? 196 : 64, py: 138, a: sd ? Math.PI + 0.3 + wag : -0.3 - wag }; PP.drawTail(c, f, fc, {}, t); }
-        const bx = 130 + Math.sin(t * 1.7) * 92, by = 40 + Math.abs(Math.sin(t * 3.4)) * 70; c.save(); c.translate(bx, 150 - by); c.rotate(t * 3); c.drawImage(PP.pugSprite(bl.fur, by > 55 ? 'surprised' : bl.base), -15, -15, 30, 30); c.restore();
+        const bx = 130 + Math.sin(t * 1.7) * 92, by = 40 + Math.abs(Math.sin(t * 3.4)) * 70; c.save(); c.translate(bx, 150 - by); c.drawImage(PP.ballSprite(bl), -15, -15, 30, 30); c.restore();
         c.save(); c.translate(130, 96); const an = p.anim; if (an === 'bounce') c.translate(0, -Math.abs(Math.sin(t * 3)) * 10); else if (an === 'tilt') c.rotate(Math.sin(t * 2) * 0.22); else if (an === 'nod') c.translate(0, Math.sin(t * 4) * 4); else if (an === 'wiggle') c.translate(Math.sin(t * 6) * 5, 0); else if (an === 'float') { c.translate(0, Math.sin(t * 1.5) * 8); c.rotate(Math.sin(t * 1.1) * 0.1); }
         PP.pugFace(c, 50, { fur: p.fur, acc: p.acc, expr: (t % 4) > 3.8 ? 'sleepy' : (t % 9) > 7 ? 'happy' : 'normal' }); c.restore();
       }; this.mascotRaf = requestAnimationFrame(loop);
@@ -1302,8 +1314,8 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
         col.appendChild(h(`<p class="note c">あつめたパグ ${s.pugs.length} / ${PP.PUGS.length}。えらんだパグがタイトルとゲーム画面で応援してくれます</p>`)); const g = h('<div class="grid g3"></div>');
         for (const p of PP.PUGS) { const ow = s.pugs.includes(p.id); const hid = !ow && p.price < 0, cv = pugCv(hid ? 'black' : p.fur, hid ? 'sleepy' : 'normal', hid ? null : p.acc, 64); if (hid) cv.style.filter = 'brightness(.3)'; else if (!ow) cv.style.opacity = '.8'; g.appendChild(card('pug', p, ow, s.pug === p.id, cv, ow ? p.say : p.how)); } col.appendChild(g);
       } else if (tab === 'ball') {
-        col.appendChild(h('<p class="note c">ボールの見た目だけが変わります（性能は同じ）</p>')); const g = h('<div class="grid g3"></div>');
-        for (const p of PP.BALLS) g.appendChild(card('ball', p, s.balls.includes(p.id), s.ball === p.id, pugCv(p.fur, p.base, null, 60))); col.appendChild(g);
+        col.appendChild(h('<p class="note c">ボールの色だけが変わります（性能は同じ）</p>')); const g = h('<div class="grid g3"></div>');
+        for (const p of PP.BALLS) g.appendChild(card('ball', p, s.balls.includes(p.id), s.ball === p.id, ballCv(p, 56))); col.appendChild(g);
       } else {
         for (const cat in PP.CUSTOM) {
           const C = PP.CUSTOM[cat]; col.appendChild(h(`<h3 class="sec">${C.name}</h3>`)); const g = h('<div class="grid g4"></div>');

@@ -80,6 +80,17 @@
   };
   PP.pugSprite = function (fur, expr, accn, px) { px = px || 96; return PP.sprite('pug|' + fur + '|' + expr + '|' + (accn || '') + '|' + px, px, c => pugFace(c, px * (accn ? 0.3 : 0.4), { fur, expr, acc: accn })); };
 
+  // ===== ノーマルのボール（金属球） =====
+  PP.drawBall = function (c, r, skin) {
+    let g;
+    if (!skin.c) { g = c.createLinearGradient(-r, -r, r, r);['#ff7b7b', '#ffd95a', '#7be08a', '#62a8ff', '#c98bff'].forEach((k, i) => g.addColorStop(i / 4, k)); }
+    else { g = c.createRadialGradient(-r * 0.35, -r * 0.4, r * 0.05, 0, 0, r * 1.05); g.addColorStop(0, skin.c[0]); g.addColorStop(0.45, skin.c[1]); g.addColorStop(1, skin.c[2]); }
+    c.fillStyle = g; ci(c, 0, 0, r); c.fill(); c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = Math.max(0.8, r * 0.07); c.stroke();
+    c.fillStyle = 'rgba(255,255,255,.85)'; el(c, -r * 0.36, -r * 0.42, r * 0.26, r * 0.17); c.fill();
+    c.fillStyle = 'rgba(255,255,255,.25)'; c.beginPath(); c.arc(0, 0, r * 0.78, 0.5, 1.6); c.arc(0, 0, r * 0.62, 1.6, 0.5, true); c.fill();
+  };
+  PP.ballSprite = function (skin, px) { px = px || 96; return PP.sprite('ball|' + skin.id + '|' + px, px, c => PP.drawBall(c, px * 0.4, skin)); };
+
   // ===== バンパー =====
   const PLANET = [['#ff9f6b', '#c8553d'], ['#7fd1ff', '#2f7fc1'], ['#ffd86b', '#d98a1e'], ['#c9a2ff', '#7b4fd0'], ['#8fe3a0', '#2f9e5b']];
   function bumper(c, m, t, style) {

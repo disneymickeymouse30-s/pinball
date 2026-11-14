@@ -101,8 +101,8 @@
         if (b.held && b.held.hole) continue;
         const vr = b.r > 12 ? b.r * 1.3 : b.r;
         if (this.quality !== 'low' && b.trail && !b.inShooter) { for (let i = 0; i < b.trail.length; i += 2) { c.globalAlpha = 0.05 + i / b.trail.length * 0.18; c.fillStyle = g.fever > 0 ? `hsl(${(t * 300 + i * 20) % 360},90%,70%)` : '#fff'; S.ci(c, b.trail[i], b.trail[i + 1], vr * (0.4 + i / b.trail.length * 0.5)); c.fill(); } c.globalAlpha = 1; }
-        const ex = b.ex || (g.fever > 0 ? 'star' : skin.base);
-        c.save(); c.translate(b.x, b.y); c.fillStyle = 'rgba(0,0,0,.2)'; S.el(c, 2, 3, vr, vr); c.fill(); c.rotate(b.ang); const sp = PP.pugSprite(skin.fur, ex), d = vr * 2.5; c.drawImage(sp, -d / 2, -d / 2, d, d); c.restore();
+        
+        c.save(); c.translate(b.x, b.y); c.fillStyle = 'rgba(0,0,0,.2)'; S.el(c, 2, 3, vr, vr); c.fill(); const sp = PP.ballSprite(skin), d = vr * 2.5; c.drawImage(sp, -d / 2, -d / 2, d, d); c.restore();
       }
       // パーティクル
       const ef = lk.effect;
@@ -151,7 +151,7 @@
       c.font = '9.5px ' + FONT; const m = g.missions.find(x => !x.done); c.fillStyle = g.cleared ? '#7CFC9A' : '#ffd9ec';
       c.fillText(g.cleared ? '★ クリア済み！スコアをのばそう' : m ? `目標 ${g.missions.filter(x => x.done).length + 1}/${g.missions.length}：${m.t}（${m.k === 'score' ? Math.floor(m.p / m.n * 100) + '%' : m.p + '/' + m.n}）` : '', 52, 37);
       c.textAlign = 'center'; c.textBaseline = 'middle';
-      const n = Math.max(0, g.ballsLeft - (g.over ? 0 : 1)); for (let i = 0; i < Math.min(n, 5); i++) c.drawImage(PP.pugSprite(lk.ball.fur, lk.ball.base), 330 - i * 17, 6, 20, 20);
+      const n = Math.max(0, g.ballsLeft - (g.over ? 0 : 1)); for (let i = 0; i < Math.min(n, 5); i++) c.drawImage(PP.ballSprite(lk.ball), 330 - i * 17, 6, 20, 20);
       c.fillStyle = '#bcaedc'; c.font = '8px ' + FONT; c.fillText('のこり', 305 - Math.min(n, 5) * 8, 33);
       c.fillStyle = 'rgba(255,255,255,.16)'; c.beginPath(); c.roundRect(358, 8, 32, 30, 9); c.fill(); c.fillStyle = '#fff'; c.fillRect(368, 15, 4, 16); c.fillRect(376, 15, 4, 16);
     }

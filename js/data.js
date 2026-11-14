@@ -156,14 +156,14 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
     { id: 'phantom', name: 'まぼろしパグ', fur: 'ghost', acc: 'halo', price: -1, how: '隠しイベントを見つけるともらえる', anim: 'float', say: '見つけてくれてありがとう。' }
   ];
   PP.BALLS = [
-    { id: 'normal', name: 'ふつうのパグ顔', fur: 'fawn', base: 'normal', price: 0 },
-    { id: 'smile', name: '笑顔のパグ', fur: 'fawn', base: 'happy', price: 200 },
-    { id: 'sleepy', name: '眠そうなパグ', fur: 'fawn', base: 'sleepy', price: 200 },
-    { id: 'surprised', name: '驚いたパグ', fur: 'fawn', base: 'surprised', price: 300 },
-    { id: 'black', name: '黒パグ', fur: 'black', base: 'normal', price: 400 },
-    { id: 'white', name: '白パグ', fur: 'white', base: 'normal', price: 400 },
-    { id: 'gold', name: '金色パグ', fur: 'gold', base: 'normal', price: 1500 },
-    { id: 'rainbow', name: '虹色パグ', fur: 'rainbow', base: 'happy', price: 3000 }
+    { id: 'normal', name: 'シルバー', c: ['#ffffff', '#c9ced6', '#7b828e'], price: 0 },
+    { id: 'smile', name: 'ピンク', c: ['#fff0f6', '#ff9ec4', '#d6447f'], price: 200 },
+    { id: 'sleepy', name: 'ブルー', c: ['#eef7ff', '#7fc4ff', '#2f7fc1'], price: 200 },
+    { id: 'surprised', name: 'グリーン', c: ['#f0fff4', '#8fe3a0', '#2f9e5b'], price: 300 },
+    { id: 'black', name: 'ブラック', c: ['#9a9aa6', '#44444c', '#17171a'], price: 400 },
+    { id: 'white', name: 'パール', c: ['#ffffff', '#fbf4e6', '#d9cbb0'], price: 400 },
+    { id: 'gold', name: 'ゴールド', c: ['#fffbe0', '#ffd84a', '#c58a00'], price: 1500 },
+    { id: 'rainbow', name: 'レインボー', c: null, price: 3000 }
   ];
   PP.CUSTOM = {
     flipper: { name: 'しっぽの色', items: [{ id: 'fawn', name: 'フォーン', price: 0, c: '#e9c592', d: '#c99a5e' }, { id: 'black', name: 'ブラック', price: 300, c: '#3a3a42', d: '#1e1e24' }, { id: 'pink', name: 'ピンク', price: 300, c: '#ff9ec4', d: '#e06a9c' }, { id: 'gold', name: 'ゴールド', price: 800, c: '#ffd84a', d: '#d79a00' }] },
@@ -211,13 +211,13 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
   };
   PP.EVENT_HELP = [
     ['コンボ', '1.3秒以内に続けて当てると発生。2コンボ×1.5、3コンボ×2、5コンボ×3'],
-    ['パグフィーバー', '10コンボで発動。12秒間 得点2倍＋パグボールが2個増える'],
+    ['パグフィーバー', '10コンボで発動。12秒間 得点2倍＋ボールが2個増える'],
     ['マルチボール', 'ターゲットの列を3回そろえるごとにボールが2個増える'],
     ['ジャックポット', 'ターゲットを1列そろえると点灯。穴に入れると5,000点'],
     ['スーパージャックポット', 'ボールが2個以上ある時にジャックポットを取ると15,000点'],
     ['パグ大集合', '上の P・U・G レーンを全部光らせる。3,000点＋12秒間 得点2倍。2回目でエクストラボール'],
     ['肉球ラッシュ', 'バンパーに25回当てるごとに発動。12秒間バンパー得点3倍'],
-    ['巨大パグボール', '穴のルーレットで当たり。15秒間ボールが大きくなり得点2倍'],
+    ['巨大ボール', '穴のルーレットで当たり。15秒間ボールが大きくなり得点2倍'],
     ['ドッグフードボーナス', '穴のルーレットで当たり。フードが出現、1個300点＋1バウ'],
     ['隠しイベント', 'キラキラ光るバンパーだけに3回連続で当てる。場所はステージごとに違う'],
     ['ボーナスタイム', 'ステージクリアで20秒間、ボールが落ちても戻ってくる'],

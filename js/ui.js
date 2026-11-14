@@ -10,6 +10,7 @@
     const cv = document.createElement('canvas'), d = Math.min(2, window.devicePixelRatio || 1); cv.width = cv.height = size * d; cv.style.width = cv.style.height = size + 'px';
     const c = cv.getContext('2d'); c.translate(size * d / 2, size * d * (acc ? 0.58 : 0.5)); PP.pugFace(c, size * d * (acc ? 0.3 : 0.38), { fur, expr, acc }); return cv;
   }
+  function ballCv(skin, size) { const cv = document.createElement('canvas'), d = Math.min(2, window.devicePixelRatio || 1); cv.width = cv.height = size * d; cv.style.width = cv.style.height = size + 'px'; const c = cv.getContext('2d'); c.translate(size * d / 2, size * d / 2); PP.drawBall(c, size * d * 0.4, skin); return cv; }
   function stagePreview(st, w, hh) {
     const cv = document.createElement('canvas'), d = Math.min(2, window.devicePixelRatio || 1); cv.width = w * d; cv.height = hh * d; cv.style.width = w + 'px'; cv.style.height = hh + 'px';
     const c = cv.getContext('2d'), k = w * d / 372; c.scale(k, k); c.translate(-14, -10);
@@ -74,7 +75,7 @@
         if (this.cur !== 'title' || !document.body.contains(cv)) return; this.mascotRaf = requestAnimationFrame(loop); if (ts - last < 33) return; last = ts; const t = ts / 1000;
         c.setTransform(2, 0, 0, 2, 0, 0); c.clearRect(0, 0, 260, 170);
         const wag = Math.sin(t * 7) * 0.5; for (const sd of [0, 1]) { const f = { px: sd ? 196 : 64, py: 138, a: sd ? Math.PI + 0.3 + wag : -0.3 - wag }; PP.drawTail(c, f, fc, {}, t); }
-        const bx = 130 + Math.sin(t * 1.7) * 92, by = 40 + Math.abs(Math.sin(t * 3.4)) * 70; c.save(); c.translate(bx, 150 - by); c.rotate(t * 3); c.drawImage(PP.pugSprite(bl.fur, by > 55 ? 'surprised' : bl.base), -15, -15, 30, 30); c.restore();
+        const bx = 130 + Math.sin(t * 1.7) * 92, by = 40 + Math.abs(Math.sin(t * 3.4)) * 70; c.save(); c.translate(bx, 150 - by); c.drawImage(PP.ballSprite(bl), -15, -15, 30, 30); c.restore();
         c.save(); c.translate(130, 96); const an = p.anim; if (an === 'bounce') c.translate(0, -Math.abs(Math.sin(t * 3)) * 10); else if (an === 'tilt') c.rotate(Math.sin(t * 2) * 0.22); else if (an === 'nod') c.translate(0, Math.sin(t * 4) * 4); else if (an === 'wiggle') c.translate(Math.sin(t * 6) * 5, 0); else if (an === 'float') { c.translate(0, Math.sin(t * 1.5) * 8); c.rotate(Math.sin(t * 1.1) * 0.1); }
         PP.pugFace(c, 50, { fur: p.fur, acc: p.acc, expr: (t % 4) > 3.8 ? 'sleepy' : (t % 9) > 7 ? 'happy' : 'normal' }); c.restore();
       }; this.mascotRaf = requestAnimationFrame(loop);
@@ -101,8 +102,8 @@
         col.appendChild(h(`<p class="note c">あつめたパグ ${s.pugs.length} / ${PP.PUGS.length}。えらんだパグがタイトルとゲーム画面で応援してくれます</p>`)); const g = h('<div class="grid g3"></div>');
         for (const p of PP.PUGS) { const ow = s.pugs.includes(p.id); const hid = !ow && p.price < 0, cv = pugCv(hid ? 'black' : p.fur, hid ? 'sleepy' : 'normal', hid ? null : p.acc, 64); if (hid) cv.style.filter = 'brightness(.3)'; else if (!ow) cv.style.opacity = '.8'; g.appendChild(card('pug', p, ow, s.pug === p.id, cv, ow ? p.say : p.how)); } col.appendChild(g);
       } else if (tab === 'ball') {
-        col.appendChild(h('<p class="note c">ボールの見た目だけが変わります（性能は同じ）</p>')); const g = h('<div class="grid g3"></div>');
-        for (const p of PP.BALLS) g.appendChild(card('ball', p, s.balls.includes(p.id), s.ball === p.id, pugCv(p.fur, p.base, null, 60))); col.appendChild(g);
+        col.appendChild(h('<p class="note c">ボールの色だけが変わります（性能は同じ）</p>')); const g = h('<div class="grid g3"></div>');
+        for (const p of PP.BALLS) g.appendChild(card('ball', p, s.balls.includes(p.id), s.ball === p.id, ballCv(p, 56))); col.appendChild(g);
       } else {
         for (const cat in PP.CUSTOM) {
           const C = PP.CUSTOM[cat]; col.appendChild(h(`<h3 class="sec">${C.name}</h3>`)); const g = h('<div class="grid g4"></div>');

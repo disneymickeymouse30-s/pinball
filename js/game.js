@@ -115,7 +115,7 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
     ev(id, title, desc) { this.emit('event', { id, title, desc }); }
     giveExtra() { if (this.extra >= 2) return; this.extra++; this.ballsLeft++; this.ev('extra', 'エクストラボール！', '残りボール +1'); }
     startFever() { this.fever = TUNE.feverTime; this.inc('fever'); this.addBalls(2); this.ev('fever', 'パグフィーバー！！', '12秒間 得点2倍＋ボール増殖'); }
-    multiball() { this.addBalls(2); this.inc('multiball'); this.ev('multiball', 'マルチボール！', 'パグボールが増えた'); }
+    multiball() { this.addBalls(2); this.inc('multiball'); this.ev('multiball', 'マルチボール！', 'ボールが増えた'); }
     spawnFoods(n) {
       for (let i = 0; i < n; i++) for (let k = 0; k < 20; k++) {
         const x = 45 + this.rng() * 280, y = 150 + this.rng() * 320;
@@ -170,7 +170,7 @@ var PP = (typeof window !== 'undefined' ? window : globalThis).PP = ((typeof win
       if (this.jackpotLit) this.jackpot(h.x, h.y);
       else if (h.to == null) {
         const r = this.rng();
-        if (r < 0.3 && this.giant <= 0) { this.giant = 15; this.ev('giant', '巨大パグボール！', '15秒間 大きくなって得点2倍'); }
+        if (r < 0.3 && this.giant <= 0) { this.giant = 15; this.ev('giant', '巨大ボール！', '15秒間 大きくなって得点2倍'); }
         else if (r < 0.62) { this.spawnFoods(10); this.ev('food', 'ドッグフードボーナス！', 'フードを拾って得点とバウ'); }
         else if (r < 0.85) { this.addScore(1000, h.x, h.y - 20, true); this.ev('r1000', 'ルーレット +1,000点', ''); }
         else { this.bow += 5; this.ev('rbow', 'ルーレット +5バウ', ''); }
